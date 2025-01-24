@@ -3,7 +3,7 @@ from openai import OpenAI
 from anthropic import Anthropic
 from typing import List
 
-st.set_page_config(page_title="Personal AI Chat", layout="wide")
+st.set_page_config(page_title="craigdoesdata | AI Chat", layout="wide")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
