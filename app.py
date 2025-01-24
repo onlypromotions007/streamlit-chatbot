@@ -29,10 +29,11 @@ def generate_response(messages: List[dict], api_key: str, provider: str) -> str:
             )
             return response.choices[0].message.content
 
-        elif provider == "OpenAI GPT-4o":
+        elif provider == "OpenAI GPT-4":
             client = OpenAI(api_key=api_key)
             response = client.chat.completions.create(
                 model="gpt-4o",
+                store=True,
                 messages=messages,
                 temperature=0.7,
             )
