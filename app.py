@@ -50,6 +50,7 @@ def generate_response(messages: List[dict], api_key: str, provider: str) -> str:
                 model="claude-3-sonnet-20240229",
                 messages=formatted_messages,
                 temperature=0.7,
+                max_tokens=1000
             )
             return response.content[0].text
 
