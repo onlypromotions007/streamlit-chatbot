@@ -57,7 +57,7 @@ def generate_response(messages: List[dict], api_key: str, provider: str) -> str:
     except Exception as e:
         return f"Error: {str(e)}"
 
-st.title("Personal AI Chat")
+st.title("craigdoesdata | AI Chat")
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
