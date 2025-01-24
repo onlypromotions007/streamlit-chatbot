@@ -13,7 +13,11 @@ with st.sidebar:
         "Select API Provider",
         ["Deepseek Chat", "OpenAI GPT-4o", "Anthropic Claude"]
     )
-    api_key = st.text_input(f"Enter your {api_provider} API Key:", type="password")
+    # Only show API key input for OpenAI and Anthropic
+    if api_provider in ["OpenAI GPT-4o", "Anthropic Claude"]:
+        api_key = st.text_input(f"Enter your {api_provider} API Key:", type="password")
+    else:
+        api_key = st.secrets["DEEPSEEK_API_KEY"]
 
 def generate_response(messages: List[dict], api_key: str, provider: str) -> str:
     if not api_key:
@@ -41,10 +45,9 @@ def generate_response(messages: List[dict], api_key: str, provider: str) -> str:
 
         elif provider == "Anthropic Claude":
             client = Anthropic(api_key=api_key)
-            # Convert message format for Anthropic
             formatted_messages = []
             for msg in messages:
-                if msg["role"] != "system":  # Skip system messages for Anthropic
+                if msg["role"] != "system":
                     role = "assistant" if msg["role"] == "assistant" else "user"
                     formatted_messages.append({"role": role, "content": msg["content"]})
             
@@ -61,23 +64,18 @@ def generate_response(messages: List[dict], api_key: str, provider: str) -> str:
 
 st.title("craigdoesdata | AI Chat")
 
-# Display chat messages
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
         st.write(message["content"])
 
-# Chat input
 if prompt := st.chat_input("What would you like to discuss?"):
-    # Add user message to chat history
     st.session_state.messages.append({"role": "user", "content": prompt})
     
-    # Display user message
     with st.chat_message("user"):
         st.write(prompt)
     
-    if api_key:
-        with st.chat_message("assistant"):
-            response = generate_response(st.session_state.messages, api_key, api_provider)
-            if response:  # Only write if we got a valid response
-                st.write(response)
-                st.session_state.messages.append({"role": "assistant", "content": response})
+    with st.chat_message("assistant"):
+        response = generate_response(st.session_state.messages, api_key, api_provider)
+        if response:
+            st.write(response)
+            st.session_state.messages.append({"role": "assistant", "content": response})
