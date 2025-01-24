@@ -11,7 +11,7 @@ if "messages" not in st.session_state:
 with st.sidebar:
     api_provider = st.selectbox(
         "Select API Provider",
-        ["Deepseek Chat", "OpenAI GPT-4", "Anthropic Claude"]
+        ["Deepseek Chat", "OpenAI GPT-4o", "Anthropic Claude"]
     )
     api_key = st.text_input(f"Enter your {api_provider} API Key:", type="password")
 
@@ -29,7 +29,7 @@ def generate_response(messages: List[dict], api_key: str, provider: str) -> str:
             )
             return response.choices[0].message.content
 
-        elif provider == "OpenAI GPT-4":
+        elif provider == "OpenAI GPT-4o":
             client = OpenAI(api_key=api_key)
             response = client.chat.completions.create(
                 model="gpt-4o",
