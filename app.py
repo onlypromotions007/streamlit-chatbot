@@ -1,6 +1,7 @@
 import streamlit as st
 from openai import OpenAI
 from anthropic import Anthropic
+import google.generativeai as genai
 from typing import List
 
 st.set_page_config(page_title="craigdoesdata | AI Chat", layout="wide")
@@ -11,20 +12,32 @@ if "messages" not in st.session_state:
 with st.sidebar:
     api_provider = st.selectbox(
         "Select API Provider",
-        ["Deepseek Chat", "OpenAI GPT-4o", "Anthropic Claude"]
+        ["Deepseek Chat", "OpenAI GPT-4o", "Anthropic Claude", "Google Gemini 2.0 Flash"]
     )
     # Only show API key input for OpenAI and Anthropic
     if api_provider in ["OpenAI GPT-4o", "Anthropic Claude"]:
-        api_key = st.text_input(f"Enter your {api_provider} API Key:", type="password")
+    api_key = st.text_input(f"Enter your {api_provider} API Key:", type="password")
+    elif api_provider == "Google Gemini 2.0 Flash":
+    api_key = st.secrets["GOOGLE_API_KEY"]
     else:
-        api_key = st.secrets["DEEPSEEK_API_KEY"]
+    api_key = st.secrets["DEEPSEEK_API_KEY"]
 
 def generate_response(messages: List[dict], api_key: str, provider: str) -> str:
     if not api_key:
         return "Please enter your API key in the sidebar."
     
     try:
-        if provider == "Deepseek Chat":
+        if provider == "Google Gemini 2.0 Flash":
+            genai.configure(api_key=api_key)
+            model = genai.GenerativeModel("gemini-2.0-flash-thinking-exp-01-21")
+            
+            # Convert message history to text format
+            conversation = "\n".join([f"{m['role']}: {m['content']}" for m in messages])
+            response = model.generate_content(conversation)
+            return response.text
+
+    
+        elif provider == "Deepseek Chat":
             client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com/v1")
             response = client.chat.completions.create(
                 model="deepseek-chat",
