@@ -16,11 +16,11 @@ with st.sidebar:
     )
     # Only show API key input for OpenAI and Anthropic
     if api_provider in ["OpenAI GPT-4o", "Anthropic Claude"]:
-    api_key = st.text_input(f"Enter your {api_provider} API Key:", type="password")
+        api_key = st.text_input(f"Enter your {api_provider} API Key:", type="password")
     elif api_provider == "Google Gemini 2.0 Flash":
-    api_key = st.secrets["GOOGLE_API_KEY"]
+        api_key = st.secrets["GOOGLE_API_KEY"]
     else:
-    api_key = st.secrets["DEEPSEEK_API_KEY"]
+        api_key = st.secrets["DEEPSEEK_API_KEY"]
 
 def generate_response(messages: List[dict], api_key: str, provider: str) -> str:
     if not api_key:
