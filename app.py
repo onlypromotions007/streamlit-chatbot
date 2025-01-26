@@ -12,7 +12,7 @@ if "messages" not in st.session_state:
 with st.sidebar:
     api_provider = st.selectbox(
         "Select API Provider",
-        ["Google Gemini 2.0 Flash", "Deepseek Chat", "OpenAI GPT-4o", "Anthropic Claude"]
+        ["Google Gemini 2.0 Flash", "Deepseek r1", "Deepseek Chat", "OpenAI GPT-4o", "Anthropic Claude"]
     )
     # Only show API key input for OpenAI and Anthropic
     if api_provider in ["OpenAI GPT-4o", "Anthropic Claude"]:
@@ -46,6 +46,15 @@ def generate_response(messages: List[dict], api_key: str, provider: str, tempera
             response = model.generate_content(conversation) # Gemini API does not have explicit temperature parameter here.
 
             return response.text
+
+        elif provider == "Deepseek r1":
+            client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com/v1")
+            response = client.chat.completions.create(
+                model="deepseek-reasoner",
+                messages=messages,
+                temperature=temperature, # Use the temperature parameter
+            )
+            return response.choices[0].message.content
 
 
         elif provider == "Deepseek Chat":
