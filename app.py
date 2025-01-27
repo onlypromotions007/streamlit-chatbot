@@ -95,6 +95,14 @@ def generate_response(messages: List[dict], api_key: str, provider: str, tempera
     except Exception as e:
         return f"Error: {str(e)}"
 
+# Display logo with link using markdown at the top of the page
+st.markdown("""
+<a href="https://www.craigdoesdata.com/">
+    <img src="https://github.com/thecraigd/Python_SQL/raw/master/img/logo.png" alt="CraigDoesData Logo" width="300">
+</a>
+""", unsafe_allow_html=True)
+
+
 st.title("craigdoesdata | AI Chat")
 
 for message in st.session_state.messages:
