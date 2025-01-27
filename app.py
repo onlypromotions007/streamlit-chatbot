@@ -103,7 +103,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 
-st.title("craigdoesdata | AI Chat")
+st.title("AI Chatbot")
 
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
