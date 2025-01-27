@@ -12,12 +12,12 @@ if "messages" not in st.session_state:
 with st.sidebar:
     api_provider = st.selectbox(
         "Select API Provider",
-        ["Google Gemini 2.0 Flash", "Deepseek r1", "Deepseek Chat", "OpenAI GPT-4o", "Anthropic Claude"]
+        ["Google Gemini 2.0 Flash Thinking", "Deepseek r1", "Deepseek Chat", "OpenAI GPT-4o", "Anthropic Claude"]
     )
     # Only show API key input for OpenAI and Anthropic
     if api_provider in ["OpenAI GPT-4o", "Anthropic Claude"]:
         api_key = st.text_input(f"Enter your {api_provider} API Key:", type="password")
-    elif api_provider == "Google Gemini 2.0 Flash":
+    elif api_provider == "Google Gemini 2.0 Flash Thinking":
         api_key = st.secrets["GOOGLE_API_KEY"]
     else:
         api_key = st.secrets["DEEPSEEK_API_KEY"]
@@ -37,7 +37,7 @@ def generate_response(messages: List[dict], api_key: str, provider: str, tempera
         return "Please enter your API key in the sidebar."
 
     try:
-        if provider == "Google Gemini 2.0 Flash":
+        if provider == "Google Gemini 2.0 Flash Thinking":
             genai.configure(api_key=api_key)
             model = genai.GenerativeModel("gemini-2.0-flash-thinking-exp-01-21")
 
