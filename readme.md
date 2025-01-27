@@ -1,6 +1,9 @@
-# CraigDoesData | AI Chat
+[![CraigDoesData][logo]][link]
 
-![Craig Does Data Logo](https://raw.githubusercontent.com/thecraigd/Python_SQL/master/logo.png)
+[logo]: https://github.com/thecraigd/Python_SQL/raw/master/img/logo.png
+[link]: https://www.craigdoesdata.com/
+
+# AI Chatbot
 
 A versatile AI conversation platform supporting multiple providers 
 including Google Gemini 2.0 Flash Thinking, Deepseek r1, Deepseek Chat, OpenAI 
