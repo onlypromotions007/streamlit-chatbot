@@ -28,11 +28,10 @@ providers:
 
 ```
 Provider Selection:
-Google Gemini 2.0 Flash Thinking
+OpenAI GPT-4o
 Deepseek r1
 Deepseek Chat
 OpenAI GPT-4o
-Anthropic Claude
 ```
 
 ### Step 2: Set API Key (Optional)
